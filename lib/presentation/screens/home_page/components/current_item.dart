@@ -21,7 +21,7 @@ class CurrentItem extends StatelessWidget {
       children: [
         SvgPicture.asset(
           icon,
-          width: 42,
+          width: 36,
         ),
         const SizedBox(
           height: 8,
@@ -32,7 +32,7 @@ class CurrentItem extends StatelessWidget {
         ),
         Text(
           label,
-          style: kPoppinsRegular.copyWith(color: primaryBlack, fontSize: 16),
+          style: kPoppinsRegular.copyWith(color: primaryBlack),
         )
       ],
     );

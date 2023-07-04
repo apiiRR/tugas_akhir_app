@@ -32,3 +32,10 @@ final kPoppinsRegular = GoogleFonts.poppins(
 final kPoppinsLight = GoogleFonts.poppins(
   fontWeight: FontWeight.w300,
 );
+
+Text textDefaultRoundedButton(String text, {Color color = primaryWhite}) {
+  return Text(
+    text,
+    style: kPoppinsBold.copyWith(color: color),
+  );
+}

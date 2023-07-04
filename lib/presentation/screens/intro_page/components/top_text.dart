@@ -29,9 +29,12 @@ class TopText extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth! * 0.05),
           child: Column(
             children: [
+              const SizedBox(
+                height: 16,
+              ),
               Text(
                 "Find the best\nattedance experience\nwith us",
-                style: kPoppinsBold.copyWith(color: primaryWhite, fontSize: 24),
+                style: kPoppinsBold.copyWith(color: primaryWhite, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
             ],

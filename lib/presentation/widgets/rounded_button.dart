@@ -4,10 +4,11 @@ import '../utils/app_styles.dart';
 import '../utils/size_config.dart';
 
 class RoundedButton extends StatelessWidget {
-  const RoundedButton({super.key, required this.onPressed, required this.text});
+  const RoundedButton(
+      {super.key, required this.onPressed, required this.child});
 
   final void Function()? onPressed;
-  final String text;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +16,11 @@ class RoundedButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            minimumSize: Size(SizeConfig.screenWidth!, 50),
+            minimumSize: Size(SizeConfig.screenWidth!, 46),
             backgroundColor: primaryRed,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(color: primaryWhite),
                 borderRadius: BorderRadius.circular(12))),
-        child: Text(
-          text,
-          style: kPoppinsBold.copyWith(fontSize: 16, color: primaryWhite),
-        ));
+        child: child);
   }
 }

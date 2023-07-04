@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "824102102446",
+    "project_id": "attedance-app-ed764",
+    "storage_bucket": "attedance-app-ed764.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824102102446:android:dab57928ce1b827e33d43f",
+        "android_client_info": {
+          "package_name": "com.example.tugas_akhir_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824102102446-u4pmsuu40m3vcturdbg817honh19di9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC18IYpjgeRhfOBJj9kAlNuLmvxL0DayQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824102102446-u4pmsuu40m3vcturdbg817honh19di9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
