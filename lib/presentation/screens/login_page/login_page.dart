@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../../core/bloc/bloc.dart';
+import '../../../injector.dart';
 import '../../routes/router.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/size_config.dart';
@@ -68,13 +69,13 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         _formKey.currentState!.save();
                         if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(
-                                AuthEventLogin(
-                                    _formKey.currentState!.value["email"]
-                                        .toString(),
-                                    _formKey.currentState!.value["password"]
-                                        .toString()),
-                              );
+                          locator<AuthBloc>().add(
+                            AuthEventLogin(
+                                _formKey.currentState!.value["email"]
+                                    .toString(),
+                                _formKey.currentState!.value["password"]
+                                    .toString()),
+                          );
                         }
                       },
                       child: BlocConsumer<AuthBloc, AuthState>(

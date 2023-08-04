@@ -10,10 +10,10 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tugas_akhir_project/core/bloc/bloc.dart';
 import 'package:tugas_akhir_project/presentation/routes/router.dart';
 
-import '../../../core/location.dart';
 import '../../../data/repository/firestore service/firestore_services.dart';
 import '../../../domain/model/attedance_model.dart';
 import '../../../domain/model/profile_model.dart';
+import '../../../injector.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/size_config.dart';
 import 'components/current_item.dart';
@@ -27,44 +27,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  UploadTask? uploadTask;
   bool isLoading = false;
-
-  Future<String> uploadFile(XFile pickFile) async {
-    DateTime now = DateTime.now();
-    late String urlPhoto;
-    final path = 'attedances/${pickFile.name + now.toIso8601String()}';
-    final file = File(pickFile.path);
-
-    try {
-      final ref = FirebaseStorage.instance.ref().child(path);
-      setState(() {
-        uploadTask = ref.putData(file.readAsBytesSync());
-      });
-
-      final snapshot = await uploadTask!.whenComplete(() {});
-
-      final urlDownload = await snapshot.ref.getDownloadURL();
-      urlPhoto = urlDownload;
-
-      setState(() {
-        uploadTask = null;
-      });
-    } on FirebaseException catch (_) {}
-
-    return urlPhoto;
-  }
-
-  Future<XFile?> pickImage() async {
-    final XFile? image =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    return image;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final attedanceBloc =
-        BlocProvider.of<AttedanceBloc>(context, listen: false);
     SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
@@ -75,73 +41,76 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 16,
             ),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () => context.goNamed(Routes.profilePage),
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            image: AssetImage("assets/images/profil.jpg"),
-                            fit: BoxFit.cover),
-                        border: Border.all(color: primaryGrey)),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome",
-                      style: kPoppinsRegular.copyWith(fontSize: 16),
-                    ),
-                    StreamBuilder<DocumentSnapshot<ProfileModel>>(
-                        stream: FirestoreServices().streamCurrentProfile(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          }
+            StreamBuilder<DocumentSnapshot<ProfileModel>>(
+                stream: FirestoreServices().streamCurrentProfile(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
 
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: Text(
-                                "Data not found",
-                                style: kPoppinsRegular.copyWith(fontSize: 18),
-                              ),
-                            );
-                          }
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: Text(
+                        "Data not found",
+                        style: kPoppinsRegular.copyWith(fontSize: 18),
+                      ),
+                    );
+                  }
 
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text(
-                                "Cannot reach data",
-                                style: kPoppinsRegular.copyWith(fontSize: 18),
-                              ),
-                            );
-                          }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        "Cannot reach data",
+                        style: kPoppinsRegular.copyWith(fontSize: 18),
+                      ),
+                    );
+                  }
 
-                          final ProfileModel? data = snapshot.data?.data();
+                  final ProfileModel? data = snapshot.data?.data();
 
-                          return Text(
+                  return Row(
+                    children: [
+                      InkWell(
+                        onTap: () => context.goNamed(Routes.profilePage),
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(data != null &&
+                                          data.photo != null &&
+                                          data.photo != ""
+                                      ? data.photo!
+                                      : "https://firebasestorage.googleapis.com/v0/b/mini-project-flutter-aee89.appspot.com/o/files%2Fuser_profile.png?alt=media&token=5e79293e-e1d6-4e1b-a61a-07a80960e313")),
+                              border: Border.all(color: primaryGrey)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Welcome",
+                            style: kPoppinsRegular.copyWith(fontSize: 16),
+                          ),
+                          Text(
                             data != null ? data.name : "-",
                             style: kPoppinsSemibold.copyWith(fontSize: 18),
-                          );
-                        })
-                  ],
-                )
-              ],
-            ),
+                          )
+                        ],
+                      )
+                    ],
+                  );
+                }),
             SizedBox(
               height: 5.h,
             ),
@@ -164,40 +133,15 @@ class _HomePageState extends State<HomePage> {
                       InkWell(
                         onTap: () {
                           if (isLoading == false) {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            checkArea().then((value) {
-                              if (value) {
-                                pickImage().then((value) async {
-                                  if (value != null) {
-                                    await uploadFile(value).then((value) =>
-                                        attedanceBloc
-                                            .add(AttedanceEventClock(value)));
-                                  }
-                                });
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(
-                                    "Absent failed because you are outside the area",
-                                    style: kPoppinsRegular.copyWith(
-                                        color: primaryWhite),
-                                  ),
-                                  backgroundColor: primaryRed,
-                                  duration: const Duration(milliseconds: 1000),
-                                ));
-                              }
-
-                              setState(() {
-                                isLoading = false;
-                              });
-                            });
+                            locator<AttedanceBloc>().add(AttedanceEventClock());
                           }
                         },
                         child: BlocListener<AttedanceBloc, AttedanceState>(
                           listener: (context, state) {
                             if (state is AttedanceError) {
+                              setState(() {
+                                isLoading = false;
+                              });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text(
@@ -208,6 +152,18 @@ class _HomePageState extends State<HomePage> {
                                 backgroundColor: primaryRed,
                                 duration: const Duration(milliseconds: 1000),
                               ));
+                            }
+
+                            if (state is AttedanceComplete) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+
+                            if (state is AttedanceLoading) {
+                              setState(() {
+                                isLoading = true;
+                              });
                             }
                           },
                           child: data != null && data.checkOut != null

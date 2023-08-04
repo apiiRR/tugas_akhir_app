@@ -4,6 +4,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tugas_akhir_project/presentation/routes/router.dart';
 
 import '../../../core/bloc/bloc.dart';
+import '../../../injector.dart';
 import '../../utils/app_styles.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/textfield_with_label.dart';
@@ -17,10 +18,10 @@ class UpdatePasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryWhite,
+        backgroundColor: primaryRed,
         title: Text(
           "Change Password",
-          style: kPoppinsBold.copyWith(color: primaryBlack),
+          style: kPoppinsBold.copyWith(color: primaryWhite),
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -28,7 +29,7 @@ class UpdatePasswordPage extends StatelessWidget {
             onPressed: () => context.pop(),
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: primaryBlack,
+              color: primaryWhite,
             )),
       ),
       body: SingleChildScrollView(
@@ -73,9 +74,8 @@ class UpdatePasswordPage extends StatelessWidget {
                       if (_formKey.currentState!.value["email"].toString() ==
                           _formKey.currentState!.value["password_repeat"]
                               .toString()) {
-                        context.read<ProfileBloc>().add(
-                            ProfileEventUpdatePassword(_formKey
-                                .currentState!.value["password"]
+                        locator<ProfileBloc>().add(ProfileEventUpdatePassword(
+                            _formKey.currentState!.value["password"]
                                 .toString()));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

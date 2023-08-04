@@ -59,6 +59,7 @@ dependencies:
   image_picker: ^1.0.0
   form_builder_file_picker: ^4.0.0
   url_launcher: ^6.1.11
+  google_ml_vision: ^0.0.8
 
 dev_dependencies:
   flutter_test:

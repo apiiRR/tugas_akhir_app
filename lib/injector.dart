@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/bloc/bloc.dart';
+
 GetIt locator = GetIt.instance;
 
 void setupLocator() async {
@@ -17,4 +19,9 @@ void setupLocator() async {
   });
   locator.registerLazySingleton(() => auth);
   locator.registerLazySingleton(() => firestore);
+
+  locator.registerLazySingleton<AuthBloc>(() => AuthBloc());
+  locator.registerLazySingleton<AttedanceBloc>(() => AttedanceBloc());
+  locator.registerLazySingleton<ProfileBloc>(() => ProfileBloc());
+  locator.registerLazySingleton<LeaveBloc>(() => LeaveBloc());
 }

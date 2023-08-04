@@ -24,18 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(),
-          ),
-          BlocProvider<AttedanceBloc>(
-            create: (context) => AttedanceBloc(),
-          ),
-          BlocProvider<ProfileBloc>(
-            create: (context) => ProfileBloc(),
-          ),
-          BlocProvider<LeaveBloc>(
-            create: (context) => LeaveBloc(),
-          ),
+          BlocProvider(create: (context) => locator<AuthBloc>()),
+          BlocProvider(create: (context) => locator<AttedanceBloc>()),
+          BlocProvider(create: (context) => locator<ProfileBloc>()),
+          BlocProvider(create: (context) => locator<LeaveBloc>()),
         ],
         child: ResponsiveSizer(builder: (context, orientation, screenType) {
           return MaterialApp.router(

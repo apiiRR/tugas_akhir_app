@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_ml_vision/google_ml_vision.dart';
+import 'package:image_picker/image_picker.dart';
 
 Future<Map<String, dynamic>> determinePosition() async {
   bool serviceEnabled;
@@ -61,6 +66,47 @@ Future<bool> checkArea() async {
       -7.589281, 110.7422753, position.latitude, position.longitude);
 
   if (distance <= 300) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future<String> uploadFile(XFile pickFile) async {
+  UploadTask? uploadTask;
+  DateTime now = DateTime.now();
+  late String urlPhoto;
+  final path = 'attedances/${pickFile.name + now.toIso8601String()}';
+  final file = File(pickFile.path);
+
+  try {
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putData(file.readAsBytesSync());
+
+    final snapshot = await uploadTask.whenComplete(() {});
+
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    urlPhoto = urlDownload;
+
+    uploadTask = null;
+  } on FirebaseException catch (_) {}
+
+  return urlPhoto;
+}
+
+Future<XFile?> pickImage() async {
+  final XFile? image =
+      await ImagePicker().pickImage(source: ImageSource.camera);
+  return image;
+}
+
+Future<bool> detectFace(File pickedImage) async {
+  // input image
+  final GoogleVisionImage visionImage = GoogleVisionImage.fromFile(pickedImage);
+  final FaceDetector faceDetector = GoogleVision.instance.faceDetector();
+  final List<Face> faces = await faceDetector.processImage(visionImage);
+  // final List<Face> faces = await faceDetector.processImage(inputImage);
+  if (faces.isNotEmpty) {
     return true;
   } else {
     return false;

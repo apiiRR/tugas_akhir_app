@@ -320,237 +320,237 @@ class HistoryPage extends StatelessWidget {
     );
   }
 
-  SingleChildScrollView onTime(
-      ScrollController controller, List<AttedanceModel> data) {
-    final List<AttedanceModel> dataOntime =
-        data.where((element) => element.status == 1).toList();
-    return SingleChildScrollView(
-      controller: controller,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          ListView.builder(
-              itemCount: dataOntime.length,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => InkWell(
-                    onTap: () {
-                      context.goNamed(Routes.detailHistoryPage,
-                          extra: dataOntime[index]);
-                    },
-                    child: Card(
-                      elevation: 1.5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              // "Monday, 1 March 2023",
-                              DateFormat('EEEE, d MMMM y')
-                                  .format(dataOntime[index].checkIn.time),
-                              style: kPoppinsMedium,
-                            ),
-                            const Divider(
-                              color: primaryGrey,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(Icons.access_time),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Check In",
-                                          style: kPoppinsLight.copyWith(
-                                              fontSize: 16),
-                                        ),
-                                        Text(
-                                          // "08.58",
-                                          DateFormat('HH:mm').format(
-                                              dataOntime[index].checkIn.time),
-                                          style: kPoppinsMedium,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Check Out",
-                                      style:
-                                          kPoppinsLight.copyWith(fontSize: 16),
-                                    ),
-                                    Text(
-                                      // "08.58",
-                                      dataOntime[index].checkOut == null
-                                          ? "--:--"
-                                          : DateFormat('HH:mm').format(
-                                              dataOntime[index].checkOut!.time),
-                                      style: kPoppinsMedium,
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Duration",
-                                      style:
-                                          kPoppinsLight.copyWith(fontSize: 16),
-                                    ),
-                                    Text(
-                                      // "09 Hours 02 Min",
-                                      dataOntime[index].checkOut == null
-                                          ? "--:--"
-                                          : "${dataOntime[index].checkOut!.time.difference(dataOntime[index].checkIn.time).inMinutes.toString()} Min",
-                                      style: kPoppinsMedium,
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
-  }
+  // SingleChildScrollView onTime(
+  //     ScrollController controller, List<AttedanceModel> data) {
+  //   final List<AttedanceModel> dataOntime =
+  //       data.where((element) => element.status == 1).toList();
+  //   return SingleChildScrollView(
+  //     controller: controller,
+  //     child: Column(
+  //       children: [
+  //         const SizedBox(
+  //           height: 10,
+  //         ),
+  //         ListView.builder(
+  //             itemCount: dataOntime.length,
+  //             physics: const NeverScrollableScrollPhysics(),
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.zero,
+  //             itemBuilder: (context, index) => InkWell(
+  //                   onTap: () {
+  //                     context.goNamed(Routes.detailHistoryPage,
+  //                         extra: dataOntime[index]);
+  //                   },
+  //                   child: Card(
+  //                     elevation: 1.5,
+  //                     shape: RoundedRectangleBorder(
+  //                         borderRadius: BorderRadius.circular(8)),
+  //                     margin: const EdgeInsets.symmetric(
+  //                         horizontal: 10, vertical: 6),
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.symmetric(
+  //                           horizontal: 16, vertical: 10),
+  //                       child: Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           Text(
+  //                             // "Monday, 1 March 2023",
+  //                             DateFormat('EEEE, d MMMM y')
+  //                                 .format(dataOntime[index].checkIn.time),
+  //                             style: kPoppinsMedium,
+  //                           ),
+  //                           const Divider(
+  //                             color: primaryGrey,
+  //                           ),
+  //                           Row(
+  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                             children: [
+  //                               Row(
+  //                                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                                 children: [
+  //                                   const Icon(Icons.access_time),
+  //                                   const SizedBox(
+  //                                     width: 10,
+  //                                   ),
+  //                                   Column(
+  //                                     crossAxisAlignment:
+  //                                         CrossAxisAlignment.start,
+  //                                     children: [
+  //                                       Text(
+  //                                         "Check In",
+  //                                         style: kPoppinsLight.copyWith(
+  //                                             fontSize: 16),
+  //                                       ),
+  //                                       Text(
+  //                                         // "08.58",
+  //                                         DateFormat('HH:mm').format(
+  //                                             dataOntime[index].checkIn.time),
+  //                                         style: kPoppinsMedium,
+  //                                       )
+  //                                     ],
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                               Column(
+  //                                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                                 children: [
+  //                                   Text(
+  //                                     "Check Out",
+  //                                     style:
+  //                                         kPoppinsLight.copyWith(fontSize: 16),
+  //                                   ),
+  //                                   Text(
+  //                                     // "08.58",
+  //                                     dataOntime[index].checkOut == null
+  //                                         ? "--:--"
+  //                                         : DateFormat('HH:mm').format(
+  //                                             dataOntime[index].checkOut!.time),
+  //                                     style: kPoppinsMedium,
+  //                                   )
+  //                                 ],
+  //                               ),
+  //                               Column(
+  //                                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                                 children: [
+  //                                   Text(
+  //                                     "Duration",
+  //                                     style:
+  //                                         kPoppinsLight.copyWith(fontSize: 16),
+  //                                   ),
+  //                                   Text(
+  //                                     // "09 Hours 02 Min",
+  //                                     dataOntime[index].checkOut == null
+  //                                         ? "--:--"
+  //                                         : "${dataOntime[index].checkOut!.time.difference(dataOntime[index].checkIn.time).inMinutes.toString()} Min",
+  //                                     style: kPoppinsMedium,
+  //                                   )
+  //                                 ],
+  //                               )
+  //                             ],
+  //                           )
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 )),
+  //         const SizedBox(
+  //           height: 20,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  SingleChildScrollView overdue(
-      ScrollController controller, List<AttedanceModel> data) {
-    final List<AttedanceModel> dataOntime =
-        data.where((element) => element.status == 2).toList();
-    return SingleChildScrollView(
-      controller: controller,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          ListView.builder(
-              itemCount: dataOntime.length,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => Card(
-                    elevation: 1.5,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            // "Monday, 1 March 2023",
-                            DateFormat('EEEE, d MMMM y')
-                                .format(dataOntime[index].checkIn.time),
-                            style: kPoppinsMedium,
-                          ),
-                          const Divider(
-                            color: primaryGrey,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Icon(Icons.access_time),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Check In",
-                                        style: kPoppinsLight.copyWith(
-                                            fontSize: 16),
-                                      ),
-                                      Text(
-                                        // "08.58",
-                                        DateFormat('HH:mm').format(
-                                            dataOntime[index].checkIn.time),
-                                        style: kPoppinsMedium,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Check Out",
-                                    style: kPoppinsLight.copyWith(fontSize: 16),
-                                  ),
-                                  Text(
-                                    // "08.58",
-                                    dataOntime[index].checkOut == null
-                                        ? "--:--"
-                                        : DateFormat('HH:mm').format(
-                                            dataOntime[index].checkOut!.time),
-                                    style: kPoppinsMedium,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Duration",
-                                    style: kPoppinsLight.copyWith(fontSize: 16),
-                                  ),
-                                  Text(
-                                    // "09 Hours 02 Min",
-                                    dataOntime[index].checkOut == null
-                                        ? "--:--"
-                                        : "${dataOntime[index].checkOut!.time.difference(dataOntime[index].checkIn.time).inMinutes.toString()} Min",
-                                    style: kPoppinsMedium,
-                                  )
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
-  }
+  // SingleChildScrollView overdue(
+  //     ScrollController controller, List<AttedanceModel> data) {
+  //   final List<AttedanceModel> dataOntime =
+  //       data.where((element) => element.status == 2).toList();
+  //   return SingleChildScrollView(
+  //     controller: controller,
+  //     child: Column(
+  //       children: [
+  //         const SizedBox(
+  //           height: 10,
+  //         ),
+  //         ListView.builder(
+  //             itemCount: dataOntime.length,
+  //             physics: const NeverScrollableScrollPhysics(),
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.zero,
+  //             itemBuilder: (context, index) => Card(
+  //                   elevation: 1.5,
+  //                   shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(8)),
+  //                   margin:
+  //                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.symmetric(
+  //                         horizontal: 16, vertical: 10),
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           // "Monday, 1 March 2023",
+  //                           DateFormat('EEEE, d MMMM y')
+  //                               .format(dataOntime[index].checkIn.time),
+  //                           style: kPoppinsMedium,
+  //                         ),
+  //                         const Divider(
+  //                           color: primaryGrey,
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: [
+  //                             Row(
+  //                               crossAxisAlignment: CrossAxisAlignment.start,
+  //                               children: [
+  //                                 const Icon(Icons.access_time),
+  //                                 const SizedBox(
+  //                                   width: 10,
+  //                                 ),
+  //                                 Column(
+  //                                   crossAxisAlignment:
+  //                                       CrossAxisAlignment.start,
+  //                                   children: [
+  //                                     Text(
+  //                                       "Check In",
+  //                                       style: kPoppinsLight.copyWith(
+  //                                           fontSize: 16),
+  //                                     ),
+  //                                     Text(
+  //                                       // "08.58",
+  //                                       DateFormat('HH:mm').format(
+  //                                           dataOntime[index].checkIn.time),
+  //                                       style: kPoppinsMedium,
+  //                                     )
+  //                                   ],
+  //                                 ),
+  //                               ],
+  //                             ),
+  //                             Column(
+  //                               crossAxisAlignment: CrossAxisAlignment.start,
+  //                               children: [
+  //                                 Text(
+  //                                   "Check Out",
+  //                                   style: kPoppinsLight.copyWith(fontSize: 16),
+  //                                 ),
+  //                                 Text(
+  //                                   // "08.58",
+  //                                   dataOntime[index].checkOut == null
+  //                                       ? "--:--"
+  //                                       : DateFormat('HH:mm').format(
+  //                                           dataOntime[index].checkOut!.time),
+  //                                   style: kPoppinsMedium,
+  //                                 )
+  //                               ],
+  //                             ),
+  //                             Column(
+  //                               crossAxisAlignment: CrossAxisAlignment.start,
+  //                               children: [
+  //                                 Text(
+  //                                   "Duration",
+  //                                   style: kPoppinsLight.copyWith(fontSize: 16),
+  //                                 ),
+  //                                 Text(
+  //                                   // "09 Hours 02 Min",
+  //                                   dataOntime[index].checkOut == null
+  //                                       ? "--:--"
+  //                                       : "${dataOntime[index].checkOut!.time.difference(dataOntime[index].checkIn.time).inMinutes.toString()} Min",
+  //                                   style: kPoppinsMedium,
+  //                                 )
+  //                               ],
+  //                             )
+  //                           ],
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 )),
+  //         const SizedBox(
+  //           height: 20,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

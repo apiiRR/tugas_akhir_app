@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../../core/bloc/leave/leave_bloc.dart';
+import '../../../injector.dart';
 import '../../routes/router.dart';
 import '../../utils/app_styles.dart';
 import '../../widgets/date_picker_with_label.dart';
@@ -21,10 +22,10 @@ class AddLeavePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryWhite,
+        backgroundColor: primaryRed,
         title: Text(
           "Add Leave",
-          style: kPoppinsBold.copyWith(color: primaryBlack),
+          style: kPoppinsBold.copyWith(color: primaryWhite),
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -32,7 +33,7 @@ class AddLeavePage extends StatelessWidget {
             onPressed: () => context.goNamed(Routes.leavePage),
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: primaryBlack,
+              color: primaryWhite,
             )),
       ),
       body: SingleChildScrollView(
@@ -98,13 +99,13 @@ class AddLeavePage extends StatelessWidget {
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
-                        context.read<LeaveBloc>().add(LeaveEventAdd(
-                              _formKey.currentState!.value["type"],
-                              _formKey.currentState!.value["start"],
-                              _formKey.currentState!.value["end"],
-                              _formKey.currentState!.value["doc"][0],
-                              _formKey.currentState!.value["note"],
-                            ));
+                        locator<LeaveBloc>().add(LeaveEventAdd(
+                          _formKey.currentState!.value["type"],
+                          _formKey.currentState!.value["start"],
+                          _formKey.currentState!.value["end"],
+                          _formKey.currentState!.value["doc"][0],
+                          _formKey.currentState!.value["note"],
+                        ));
                       }
                     },
                     child: BlocConsumer<LeaveBloc, LeaveState>(

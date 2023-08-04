@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +10,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../core/bloc/bloc.dart';
 import '../../../data/repository/firestore service/firestore_services.dart';
 import '../../../domain/model/profile_model.dart';
+import '../../../injector.dart';
 import '../../routes/router.dart';
 import '../../utils/app_styles.dart';
 import 'componets/form_profile.dart';
@@ -48,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
           uploadTask = null;
         });
       } on FirebaseException catch (e) {
-        print(e.message);
+        log(e.message!);
       }
     }
 
@@ -70,10 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryWhite,
+        backgroundColor: primaryRed,
         title: Text(
           "Profile",
-          style: kPoppinsBold.copyWith(color: primaryBlack),
+          style: kPoppinsBold.copyWith(color: primaryWhite),
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -81,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () => context.goNamed(Routes.homePage),
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: primaryBlack,
+              color: primaryWhite,
             )),
         actions: [
           IconButton(
@@ -172,7 +174,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget photo(data) {
-    final profileBloc = BlocProvider.of<ProfileBloc>(context, listen: false);
     return Center(
       child: Stack(
         children: [
@@ -281,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           if (pickedFile != null) {
                                             context.pop();
                                             await uploadFile().then((value) =>
-                                                profileBloc.add(
+                                                locator<ProfileBloc>().add(
                                                     ProfileEventUpdatePhoto(
                                                         value)));
                                           } else {
