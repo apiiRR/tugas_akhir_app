@@ -87,10 +87,13 @@ class _ProfilePageState extends State<ProfilePage> {
             )),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                locator<AuthBloc>().add(AuthEventLogout());
+                context.goNamed(Routes.loginPage);
+              },
               icon: const Icon(
                 Icons.logout,
-                color: primaryRed,
+                color: primaryWhite,
               ))
         ],
       ),

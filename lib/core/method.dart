@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
@@ -55,6 +56,8 @@ Future<Map<String, dynamic>> determinePosition() async {
 }
 
 Future<bool> checkArea() async {
+  Map<String, dynamic> setting = await dataSetting();
+
   Map<String, dynamic> dataResponse = await determinePosition();
 
   if (dataResponse["error"]) {
@@ -62,8 +65,8 @@ Future<bool> checkArea() async {
   }
 
   Position position = dataResponse["position"];
-  double distance = Geolocator.distanceBetween(
-      -7.589281, 110.7422753, position.latitude, position.longitude);
+  double distance = Geolocator.distanceBetween(double.parse(setting["lat"]),
+      double.parse(setting["long"]), position.latitude, position.longitude);
 
   if (distance <= 300) {
     return true;
@@ -111,4 +114,17 @@ Future<bool> detectFace(File pickedImage) async {
   } else {
     return false;
   }
+}
+
+Future<Map<String, dynamic>> dataSetting() async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  CollectionReference<Map<String, dynamic>> colPresence =
+      firestore.collection("settings");
+
+  final dataSettings = await colPresence.get();
+  final dataDoc = dataSettings.docs.first;
+  Map<String, dynamic> resultData = dataDoc.data();
+
+  return resultData;
 }
