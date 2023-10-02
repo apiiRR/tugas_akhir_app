@@ -22,12 +22,15 @@ class AttedanceBloc extends Bloc<AttedanceEvent, AttedanceState> {
     on<AttedanceEventClock>((event, emit) async {
       try {
         emit(AttedanceLoading());
+        print("MASUK");
 
         bool isLeave = await checkLeave();
         if (isLeave == true) {
           emit(AttedanceError("Absent failed because you are leave"));
           return;
         }
+
+        print("1");
 
         bool inArea = await checkArea();
         if (inArea == false) {

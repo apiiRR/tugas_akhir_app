@@ -46,6 +46,7 @@ Future<Map<String, dynamic>> determinePosition() async {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
+  print("POSISI");
   Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high);
   return {
@@ -59,6 +60,8 @@ Future<bool> checkArea() async {
   Map<String, dynamic> setting = await dataSetting();
 
   Map<String, dynamic> dataResponse = await determinePosition();
+
+  print("POSISI $dataResponse");
 
   if (dataResponse["error"]) {
     return false;
